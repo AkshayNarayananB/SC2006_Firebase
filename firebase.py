@@ -5,7 +5,7 @@ import ollama_text
 
 def  writeBack(uid, home_desc, outdoor_desc, gym_desc):
     
-    workout_ref = db.collection('completedWorkout').document(uid)
+    workout_ref = db.collection('workoutPlan').document(uid)
     doc = workout_ref.get()
     if doc.exists:
         workout_ref.update({
