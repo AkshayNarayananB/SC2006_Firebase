@@ -24,9 +24,11 @@ for userprofile_doc in userprofile_docs:
       fitness_level = user_data.get('fitnessLevel', '')
       health_conditions = ', '.join(user_data.get('healthConditions', [])) if user_data.get('healthConditions') else ''
       workout_duration = user_data.get('workoutDuration', '')
-
+      workout_frequency = user_data.get('workoutFrequency', '')
+      workout_types = ', '.join(user_data.get('workoutTypes', []))
+     
       # Concatenated string to send directly to deepseek
-      concatenated_str = f"Fitness goals: {fitness_goals_str}, Fitness level: {fitness_level}, Health Issues: {health_conditions}, Workout Duration: {workout_duration}"
+      concatenated_str = f"Fitness goals: {fitness_goals_str}, Fitness level: {fitness_level}, Health Issues: {health_conditions}, Workout Duration: {workout_duration}, {workout_frequency} times a week, mostly {workout_types}"
 
       # Store in dictionary
       uid_data[uid] = concatenated_str
