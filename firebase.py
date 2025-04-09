@@ -1,6 +1,33 @@
 # pip  install firebase-admin
 import firebase_admin
 from firebase_admin import credentials, firestore
+import ollama_text
+
+def  writeBack(uid, home_desc, outdoor_desc, gym_desc):
+    
+    workout_ref = db.collection('completedWorkout').document(uid)
+    doc = workout_ref.get()
+    if doc.exists:
+        workout_ref.update({
+            'gymDesc': gym_desc,
+            'homeDesc': home_desc,
+            'outdoorDesc': outdoor_desc,
+            'completed': False,
+            'selectedWorkout': None
+        })
+        print(f"Document for UID {uid} updated successfully.")
+    else:
+        # Document doesn't exist, create new document
+        workout_ref.set({
+            'gymDesc': gym_desc,
+            'homeDesc': home_desc,
+            'outdoorDesc': outdoor_desc,
+            'completed': False,
+            'selectedWorkout': None
+        })
+        print(f"Document for UID {uid} created successfully.")
+
+
 
 cred = credentials.Certificate('C:\\Users\\Narayanakshay\\FBCred.json')
 firebase_admin.initialize_app(cred)
@@ -61,7 +88,12 @@ for workout_doc in completed_workout_docs:
 
 # Sample printing function to check data fetching before sending to deepseek
 for uid, concatenated_str in uid_data.items():
-    print(f"UID: {uid}, Data: {concatenated_str}")
+    response = ollama_text.generate_workout_plan(concatenated_str)
+    home = response[0]
+    outdoor = response[1]
+    gym = response[2]
+    writeBack(uid,home,outdoor,gym)
+    #print(f"UID: {uid}, Data: {concatenated_str}")
 
 
 
