@@ -1,5 +1,5 @@
 # pip  install firebase-admin
-import firebase-admin
+import firebase_admin
 from firebase_admin import credentials, firestore
 
 cred = credentials.Certificate('C:\\Users\\Narayanakshay\\FBCred.json')
@@ -26,7 +26,7 @@ for userprofile_doc in userprofile_docs:
       workout_duration = user_data.get('workoutDuration', '')
 
       # Concatenated string to send directly to deepseek
-      concatenated_str = f"{fitness_goals_str}, {fitness_level}, {health_conditions}, {workout_duration}"
+      concatenated_str = f"Fitness goals: {fitness_goals_str}, Fitness level: {fitness_level}, Health Issues: {health_conditions}, Workout Duration: {workout_duration}"
 
       # Store in dictionary
       uid_data[uid] = concatenated_str
@@ -47,7 +47,7 @@ for workout_doc in completed_workout_docs:
             workout_details_str += f"{exercise_name} ({exercise_duration}), "
         # Trailing comma and space if any
         workout_details_str = workout_details_str.rstrip(', ')
-        uid_data[workout_uid] += f", {workout_details_str}"
+        uid_data[workout_uid] += f"Previous Workout: {workout_details_str}"
 
 # Sample printing function to check data fetching before sending to deepseek
 for uid, concatenated_str in uid_data.items():
