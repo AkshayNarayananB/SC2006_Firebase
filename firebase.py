@@ -25,10 +25,18 @@ for userprofile_doc in userprofile_docs:
       health_conditions = ', '.join(user_data.get('healthConditions', [])) if user_data.get('healthConditions') else ''
       workout_duration = user_data.get('workoutDuration', '')
       workout_frequency = user_data.get('workoutFrequency', '')
-      workout_types = ', '.join(user_data.get('workoutTypes', []))
+      workout_types = user_data.get('workoutTypes', [])
+
+        # Handle case where workoutTypes is a single value or null
+        if isinstance(workout_types, list) and workout_types:
+            workout_types_str = ', '.join(workout_types)  # Concatenate list of workout types
+        elif isinstance(workout_types, str):  # Single value case
+            workout_types_str = workout_types
+        else:  # Case where workoutTypes is null or empty
+            workout_types_str = 'None'
      
       # Concatenated string to send directly to deepseek
-      concatenated_str = f"Fitness goals: {fitness_goals_str}, Fitness level: {fitness_level}, Health Issues: {health_conditions}, Workout Duration: {workout_duration}, {workout_frequency} times a week, mostly {workout_types}"
+      concatenated_str = f"Fitness goals: {fitness_goals_str}, Fitness level: {fitness_level}, Health Issues: {health_conditions}, Workout Duration: {workout_duration}, {workout_frequency} times a week, mostly {workout_types_str}"
 
       # Store in dictionary
       uid_data[uid] = concatenated_str
