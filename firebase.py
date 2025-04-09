@@ -47,7 +47,7 @@ for workout_doc in completed_workout_docs:
             workout_details_str += f"{exercise_name} ({exercise_duration}), "
         # Trailing comma and space if any
         workout_details_str = workout_details_str.rstrip(', ')
-        uid_data[workout_uid] += f"Previous Workout: {workout_details_str}"
+        uid_data[workout_uid] += f", Previous Workout: {workout_details_str}"
 
 # Sample printing function to check data fetching before sending to deepseek
 for uid, concatenated_str in uid_data.items():
